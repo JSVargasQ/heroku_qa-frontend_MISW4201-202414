@@ -1,0 +1,86 @@
+<app-header></app-header>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-10">
+      <div class="card mx-3 my-5">
+        <div class="row">
+          <div class="col-12 text-center">
+            <p class="mt-5 mb-2 fs-3 fw-bold">Apostar por "{{carrera.nombre_carrera}}"</p>
+          </div>
+        </div>
+
+        <form class="mx-5 my-3" [formGroup]="apuestaForm" (ngSubmit)="createApuesta(apuestaForm.value)">
+
+          <div class="form-group my-2">
+            <div class="row">
+              <div class="col-2 text-start">
+                <label for="id_carrera">Carrera</label>
+              </div>
+              <div class="col-10">
+                <div class="col-12">
+                  <input type="text" class="form-control" disabled id="race_name"
+                    value="{{ carrera.nombre_carrera }}">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group my-2">
+            <div class="row">
+              <div class="col-2 text-start">
+                <label for="id_competidor">Competidor</label>
+              </div>
+              <div class="col-10">
+                <select formControlName="id_competidor" class="form-control">
+                  <option value="">Selecciona un competidor...</option>
+                  <option *ngFor="let item of competidores" value="{{ item.id }}">
+                    {{ item.nombre_competidor }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-8">
+                <div class="alert alert-danger my-3"
+                  *ngIf="apuestaForm.get('id_competidor')?.hasError('required') && apuestaForm.get('id_competidor')?.touched">
+                  Debe seleccionar un competidor
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group my-2">
+            <div class="row">
+              <div class="col-2 text-start">
+                <label for="valor_apostado">Valor</label>
+              </div>
+              <div class="col-10">
+                <input type="number" class="form-control" formControlName="valor_apostado"
+                  placeholder="Valor de la apuesta">
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-8">
+                <div class="alert alert-danger my-3"
+                  *ngIf="apuestaForm.get('valor_apostado')?.hasError('required') && apuestaForm.get('valor_apostado')?.touched">
+                  Debe ingresar el valor de la apuesta
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-6 text-end">
+              <button class="btn btn-danger" (click)="cancelCreate()">Cancelar</button>
+            </div>
+            <div class="col-6 text-start">
+              <button type="submit" class="btn btn-warning" [disabled]="!apuestaForm.valid">Crear</button>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

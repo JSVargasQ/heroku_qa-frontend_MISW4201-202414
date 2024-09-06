@@ -1,0 +1,415 @@
+<div class="container align-items-center">
+  <div class="row align-items-center">
+    <div class="col-xs-10 col-lg-5 card px-2">
+      <div class="card-body text-center">
+        <h2 class="my-2">E-Porra</h2>
+        <p class="my-2">La manera más fácil y divertida de apostar...</p>
+      </div>
+    </div>
+
+    <div class="col-xs-10 col-lg-6 container">
+      <div class="row">
+        <div class="my-2 row">
+          <h1 class="text-center">Registro</h1>
+        </div>
+
+        <form
+          class="row"
+          [formGroup]="usuarioForm"
+          (ngSubmit)="registrarUsuario()"
+        >
+          <!-- Rol user -->
+          <div class="form-group">
+            <div class="mb-3 row">
+              <label for="rol" class="col-lg-3 col-form-label"
+                >¿Qué tipo de usuario eres?</label
+              >
+              <div class="col-lg-9">
+                <select
+                  formControlName="rol"
+                  class="form-select"
+                  (change)="changeRolUser($event)"
+                >
+                  <option [value]="rolApostador">Apostador</option>
+                  <option [value]="rolAdministrador">Administrador</option>
+                </select>
+                <!--input formControlName="rol" type="text" class="form-control" placeholder="Usuario"-->
+              </div>
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="
+                usuarioForm.get('rol')?.hasError('required') &&
+                usuarioForm.get('rol')?.touched
+              "
+            >
+              Debe seleccionar un tipo de rol
+            </div>
+          </div>
+
+          <!-- User for admin -->
+          <div class="form-group" *ngIf="selectedRol === rolAdministrador">
+            <div class="mb-3 row">
+              <label for="usuario" class="col-lg-3 col-form-label"
+                >Usuario</label
+              >
+              <div class="col-lg-9">
+                <input
+                  formControlName="usuario"
+                  type="text"
+                  class="form-control"
+                  placeholder="Usuario"
+                />
+              </div>
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="
+                usuarioForm.get('usuario')?.hasError('required') &&
+                usuarioForm.get('usuario')?.touched
+              "
+            >
+              Debe ingresar un usuario para registrarse
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="usuarioForm.get('usuario')?.hasError('maxlength')"
+            >
+              El usuario no debe exceder los 50 carácteres
+            </div>
+          </div>
+
+          <!-- Firstname -->
+          <div class="form-group">
+            <div class="mb-3 row">
+              <label for="firstname" class="col-lg-3 col-form-label"
+                >Nombres</label
+              >
+              <div class="col-lg-9">
+                <input
+                  formControlName="firstname"
+                  type="text"
+                  class="form-control"
+                  placeholder="Nombres"
+                />
+              </div>
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="
+                usuarioForm.get('firstname')?.hasError('required') &&
+                usuarioForm.get('firstname')?.touched
+              "
+            >
+              Debe ingresar su nombre para registrarse
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="usuarioForm.get('firstname')?.hasError('maxlength')"
+            >
+              El nombre no debe exceder los 50 carácteres
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="
+                usuarioForm.get('firstname')?.hasError('pattern') &&
+                usuarioForm.get('firstname')?.touched
+              "
+            >
+              El nombre debe contener solo caracteres alfabéticos.
+            </div>
+          </div>
+
+          <!-- Lastname -->
+          <div class="form-group">
+            <div class="mb-3 row">
+              <label for="lastname" class="col-lg-3 col-form-label"
+                >Apellidos</label
+              >
+              <div class="col-lg-9">
+                <input
+                  formControlName="lastname"
+                  type="text"
+                  class="form-control"
+                  placeholder="Apellidos"
+                />
+              </div>
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="
+                usuarioForm.get('lastname')?.hasError('required') &&
+                usuarioForm.get('lastname')?.touched
+              "
+            >
+              Debe ingresar su apellido para registrarse
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="usuarioForm.get('lastname')?.hasError('maxlength')"
+            >
+              El apellido no debe exceder los 50 carácteres
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="
+                usuarioForm.get('lastname')?.hasError('pattern') &&
+                usuarioForm.get('lastname')?.touched
+              "
+            >
+              El apellido debe contener solo caracteres alfabéticos.
+            </div>
+          </div>
+
+          <!-- Email | User for not admin -->
+          <div class="form-group" *ngIf="selectedRol === rolApostador">
+            <div class="mb-3 row">
+              <label for="email" class="col-lg-3 col-form-label">Correo</label>
+              <div class="col-lg-9">
+                <input
+                  formControlName="email"
+                  type="text"
+                  class="form-control"
+                  placeholder="Correo"
+                />
+              </div>
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="
+                usuarioForm.get('email')?.hasError('required') &&
+                usuarioForm.get('email')?.touched
+              "
+            >
+              Debe ingresar un correo para registrarse
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="
+                usuarioForm.get('email')?.hasError('pattern') &&
+                usuarioForm.get('email')?.touched
+              "
+            >
+              El correo es inválido, verifique nuevamente.
+            </div>
+          </div>
+
+          <!-- Credit card -->
+          <div class="form-group col-12" *ngIf="selectedRol === rolApostador">
+            <div class="mb-3 row">
+              <label for="creditCard" class="col-lg-3 col-form-label"
+                >Tarjeta de crédito</label
+              >
+              <div class="col-lg-9">
+                <input
+                  formControlName="creditCard"
+                  type="text"
+                  class="form-control"
+                  placeholder="Número de tarjeta de crédito"
+                />
+              </div>
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="
+                usuarioForm.get('creditCard')?.hasError('required') &&
+                usuarioForm.get('creditCard')?.touched
+              "
+            >
+              Debe ingresar el número de su tarjeta de crédito para registrarse
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="
+                usuarioForm.get('creditCard')?.hasError('pattern') &&
+                usuarioForm.get('creditCard')?.touched
+              "
+            >
+              El número de la tarjeta de crédito es invalido, valide nuevamente.
+            </div>
+          </div>
+
+          <!-- Expiration date -->
+          <div
+            class="form-group col-12 col-md-8"
+            *ngIf="selectedRol === rolApostador"
+          >
+            <div class="mb-3 row">
+              <label for="expirationDate" class="col-lg-4 col-form-label"
+                >Fecha de vencimiento</label
+              >
+              <div class="col-lg-8">
+                <input
+                  formControlName="expirationDate"
+                  type="text"
+                  class="form-control"
+                  placeholder="mm/yy"
+                />
+              </div>
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="
+                usuarioForm.get('expirationDate')?.hasError('required') &&
+                usuarioForm.get('expirationDate')?.touched
+              "
+            >
+              Debe ingresar la fecha de vencimiento de su tarjeta de crédito
+              para registrarse
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="
+                usuarioForm.get('expirationDate')?.hasError('pattern') &&
+                usuarioForm.get('expirationDate')?.touched
+              "
+            >
+              La fecha de vencimiento es invalida, debe ser de tipo mm/yy.
+            </div>
+          </div>
+
+          <!-- cvv -->
+          <div
+            class="form-group col-12 col-md-4"
+            *ngIf="selectedRol === rolApostador"
+          >
+            <div class="mb-3 row">
+              <label for="cvv" class="col-lg-4 col-form-label">CVV</label>
+              <div class="col-lg-8">
+                <input
+                  formControlName="cvv"
+                  type="number"
+                  min="100"
+                  max="999"
+                  class="form-control"
+                  placeholder="cvv"
+                />
+              </div>
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="
+                usuarioForm.get('cvv')?.hasError('required') &&
+                usuarioForm.get('cvv')?.touched
+              "
+            >
+              Debe ingresar el CVV de su tarjeta de crédito para registrarse
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="
+                (usuarioForm.get('cvv')?.hasError('max') ||
+                  usuarioForm.get('cvv')?.hasError('min')) &&
+                usuarioForm.get('cvv')?.touched
+              "
+            >
+              El CVV es invalido. El CVV debe ser de 3 digitos.
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <div class="mb-3 row">
+              <label for="password" class="col-lg-3 col-form-label"
+                >Contraseña</label
+              >
+              <div class="col-lg-9">
+                <input
+                  formControlName="password"
+                  type="password"
+                  class="form-control"
+                  placeholder="*********"
+                />
+              </div>
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="
+                usuarioForm.get('password')?.hasError('required') &&
+                usuarioForm.get('password')?.touched
+              "
+            >
+              Debe ingresar una contraseña para registrarse
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="usuarioForm.get('password')?.hasError('maxlength')"
+            >
+              La contraseña no debe exceder los 50 carácteres
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="usuarioForm.get('password')?.hasError('minlength')"
+            >
+              La contraseña debe tener más de 4 carácteres
+            </div>
+          </div>
+
+          <!-- Confirm password -->
+          <div class="form-group">
+            <div class="mb-3 row">
+              <label for="confirmPassword" class="col-lg-3 col-form-label"
+                >Confirmar contraseña</label
+              >
+              <div class="col-lg-9">
+                <input
+                  formControlName="confirmPassword"
+                  type="password"
+                  class="form-control"
+                  placeholder="*********"
+                />
+              </div>
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="
+                usuarioForm.get('confirmPassword')?.hasError('required') &&
+                usuarioForm.get('confirmPassword')?.touched
+              "
+            >
+              Debe ingresar una contraseña para registrarse
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="usuarioForm.get('confirmPassword')?.hasError('maxlength')"
+            >
+              La contraseña no debe exceder los 50 carácteres
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="usuarioForm.get('confirmPassword')?.hasError('minlength')"
+            >
+              La contraseña debe tener más de 4 carácteres
+            </div>
+            <div
+              class="alert alert-danger my-3"
+              *ngIf="
+                usuarioForm.get('confirmPassword')?.value !==
+                usuarioForm.get('password')?.value
+              "
+            >
+              Las contraseñas no coinciden
+            </div>
+          </div>
+
+          <div class="col-12 text-center mt-3">
+            <button
+              type="submit"
+              class="btn btn-warning col-8"
+              [disabled]="
+                !usuarioForm.valid ||
+                usuarioForm.get('confirmPassword')?.value !==
+                  usuarioForm.get('password')?.value
+              "
+            >
+              Registrarse
+            </button>
+          </div>
+          <div class="col-12 text-center mt-2">
+            <p>¿Ya tienes cuenta? <a href="/">Inicia sesión</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

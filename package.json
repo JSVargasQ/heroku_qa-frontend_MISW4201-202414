@@ -1,0 +1,60 @@
+{
+  "name": "e-porra",
+  "version": "0.0.0",
+  "scripts": {
+    "add-hooks": "scripts/add-hooks.sh",
+    "ng": "ng",
+    "start": "node server.js",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "preinstall": "npm install -g @angular/cli @angular/compiler-cli typescript",
+    "postinstall": "ng build"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^18.1.3",
+    "@angular/common": "~18.1.3",
+    "@angular/compiler": "~18.1.3",
+    "@angular/core": "~18.1.3",
+    "@angular/forms": "~18.1.3",
+    "@angular/platform-browser": "~18.1.3",
+    "@angular/platform-browser-dynamic": "~18.1.3",
+    "@angular/router": "~18.1.3",
+    "@auth0/angular-jwt": "^5.0.2",
+    "bootstrap": "^5.0.2",
+    "bootstrap-icons": "^1.5.0",
+    "ngx-toastr": "^19.0.0",
+    "rxjs": "~6.6.0",
+    "tslib": "^2.2.0",
+    "zone.js": "~0.14.8",
+    "@angular-devkit/build-angular": "~18.1.3",
+    "@angular/cli": "~18.1.3",
+    "@angular/compiler-cli": "~18.1.3",
+    "@types/jasmine": "~3.8.0",
+    "@types/node": "^12.11.1",
+    "jasmine-core": "~3.8.0",
+    "karma": "~6.3.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.0.3",
+    "karma-jasmine": "~4.0.0",
+    "karma-jasmine-html-reporter": "~1.7.0",
+    "typescript": "~5.4.5"
+  },
+  "devDependencies": {
+    "@types/jasmine": "~3.8.0",
+    "@types/node": "^12.11.1",
+    "jasmine-core": "~3.8.0",
+    "karma": "~6.3.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.0.3",
+    "karma-jasmine": "~4.0.0",
+    "karma-jasmine-html-reporter": "~1.7.0"
+  },
+  "engines": {
+    "node": "20.12.0",
+    "npm": "10.8.3"
+  }
+}

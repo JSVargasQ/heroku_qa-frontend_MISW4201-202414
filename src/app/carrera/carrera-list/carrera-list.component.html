@@ -1,0 +1,40 @@
+<app-header></app-header>
+<div class="container my-4">
+  <div class="row">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-10 text-center">
+              <label class="fs-4">Carreras</label>
+            </div>
+            <div class="col-2 text-center" *ngIf="isAdmin">
+              <button type="button" class="my-1 btn btn-outline-warning btn-circle" (click)="irCrearCarrera()"><i
+                  class="bi bi-plus-lg"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div class="input-group my-2">
+            <input #busqueda type="search" class="form-control" placeholder="Buscar carreras" aria-label="Search"
+              (keyup)="buscarCarrera(busqueda.value)">
+          </div>
+
+          <table class="table table-hover mb-0" aria-describedby="colecName">
+            <tbody>
+              <tr *ngFor="let carrera of mostrarCarreras; index as i" (click)="onSelect(carrera, i)"
+                [ngClass]="{'selected': i === indiceSeleccionado}">
+                <td>{{carrera.nombre_carrera}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-8">
+      <app-carrera-detail [carrera]="carreraSeleccionada"></app-carrera-detail>
+    </div>
+  </div>
+</div>
