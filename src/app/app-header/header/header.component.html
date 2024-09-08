@@ -14,12 +14,33 @@
     <div class="collapse navbar-collapse">
       <a class="navbar-brand mx-3" (click)="goTo('logIn')">E-Porra</a>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Carreras -->
         <li class="nav-item">
-          <a class="nav-link" (click)="goTo('carrera')">Carreras</a>
+          <a
+            class="nav-link"
+            [ngClass]="{ 'fw-bold': currentPath.includes('carreras') }"
+            (click)="goTo('carrera')"
+          >Carreras</a>
         </li>
+        <!-- Apuestas -->
         <li class="nav-item">
-          <a class="nav-link" (click)="goTo('apuesta')">Apuestas</a>
+          <a
+            class="nav-link"
+            [ngClass]="{ 'fw-bold': currentPath.includes('apuestas') }"
+            (click)="goTo('apuesta')">
+            Apuestas
+          </a>
         </li>
+        <!-- Mi cuenta -->
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [ngClass]="{ 'fw-bold': currentPath.includes('cuenta') }"
+            (click)="goTo('cuenta')">
+            Mi Cuenta
+          </a>
+        </li>
+        <!-- Salir -->
         <li class="nav-item">
           <a class="nav-link" (click)="goTo('logIn')">Salir</a>
         </li>

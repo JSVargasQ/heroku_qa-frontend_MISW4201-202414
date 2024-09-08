@@ -61,7 +61,7 @@ export class ApuestaCreateComponent implements OnInit {
   getCarreras(): void {
     this.carreraService.getCarreras(this.userId, this.token)
       .subscribe(carreras => {
-        this.carreras = carreras
+        this.carreras = carreras.filter(x => x.abierta == true)
       },
         error => {
           console.log(error)
@@ -95,7 +95,6 @@ export class ApuestaCreateComponent implements OnInit {
             this.showError("Ha ocurrido un error. " + error.message)
           }
         })
-    throw new Error('Method not implemented.');
   }
 
   createApuesta(newApuesta: Apuesta) {
@@ -108,6 +107,9 @@ export class ApuestaCreateComponent implements OnInit {
         error => {
           if (error.statusText === "UNAUTHORIZED") {
             this.showWarning("Su sesión ha caducado, por favor vuelva a iniciar sesión.")
+          }
+          else if(error.statusText === "BAD REQUEST") {
+            this.showError("No tiene suficiente saldo para realizar esta apuesta.")
           }
           else if (error.statusText === "UNPROCESSABLE ENTITY") {
             this.showError("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")

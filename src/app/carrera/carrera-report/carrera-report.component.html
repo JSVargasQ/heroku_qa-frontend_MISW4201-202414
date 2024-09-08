@@ -28,8 +28,8 @@
 				</thead>
 				<tbody>
 					<tr *ngFor="let apuesta of carrera?.apuestas">
-						<td>{{apuesta.nombre_apostador}}</td>
-						<td>$ {{apuesta.ganancia | number:'1.1-2' }}</td>
+						<td>{{apuesta.apostador.nombres}} {{apuesta.apostador.apellidos}}</td>
+						<td> {{ apuesta.ganancia | currency:'$':'symbol':'1.2-2' }}</td>
 					</tr>
 				</tbody>
 			</table>

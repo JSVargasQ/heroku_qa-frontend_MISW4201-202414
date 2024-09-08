@@ -7,13 +7,27 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(private routerPath: Router, private router: ActivatedRoute) {}
-  userRole: string | null = '';
 
+  // Attributes
+  userRole: string | null = '';
+  currentPath: string = '';
+
+  // Constructor
+  constructor(
+    private routerPath: Router,
+    private router: ActivatedRoute,
+  ) {
+    this.routerPath.events.subscribe(() => {
+      this.currentPath = this.router.snapshot.routeConfig?.path || '';
+    });
+  }
+
+  // LifeCycle
   ngOnInit(): void {
     this.userRole = localStorage.getItem('userRole');
   }
 
+  // Methods
   goTo(menu: string) {
     const userId = parseInt(this.router.snapshot.params.userId);
     const token = this.router.snapshot.params.userToken;
@@ -22,8 +36,10 @@ export class HeaderComponent implements OnInit {
       this.routerPath.navigate([`/`]);
     } else if (menu === 'carrera') {
       this.routerPath.navigate([`/carreras/${userId}/${token}`]);
-    } else {
+    } else if (menu === 'apuesta') {
       this.routerPath.navigate([`/apuestas/${userId}/${token}`]);
+    } else if (menu === 'cuenta') {
+      this.routerPath.navigate([`/cuenta/${userId}/${token}`]);
     }
   }
 }

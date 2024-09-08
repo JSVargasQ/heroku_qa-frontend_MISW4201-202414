@@ -63,6 +63,7 @@ export class CarreraFinishComponent implements OnInit {
     this.carreraService.actualizarGanador(this.token, form.id_competidor)
       .subscribe(competidor => {
         this.competidorGanador = competidor
+        this.routerPath.navigate([`carreras/reporte/${this.carrera.id}/${this.userId}/${this.token}`])
       },
         error => {
           if (error.statusText === "UNAUTHORIZED") {
@@ -75,7 +76,5 @@ export class CarreraFinishComponent implements OnInit {
             this.showError("Ha ocurrido un error. " + error.message)
           }
         })
-
-    this.routerPath.navigate([`carreras/reporte/${this.carrera.id}/${this.userId}/${this.token}`])
   }
 }  

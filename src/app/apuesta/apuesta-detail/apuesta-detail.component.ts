@@ -37,7 +37,12 @@ export class ApuestaDetailComponent implements OnInit {
         window.location.reload()
       },
         error => {
-          this.showError("Ha ocurrido un error. " + error.message)
+          if (error.statusText === "BAD REQUEST") {
+            this.showError("No se puede eliminar una apuesta de una carrera ya finalizada.")
+          }
+          else {
+            this.showError("Ha ocurrido un error. " + error.message)
+          }
         })
   }
 

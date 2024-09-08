@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { ApuestaModule } from './apuesta/apuesta.module';
 import { CarreraModule } from './carrera/carrera.module';
 import { UsuarioModule } from './usuario/usuario.module';
+import { CuentaModule } from './cuenta/cuenta.module';
 //Test comment
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { UsuarioModule } from './usuario/usuario.module';
     CarreraModule,
     ApuestaModule,
     AppHeaderModule,
+    CuentaModule,
     ToastrModule.forRoot({
       timeOut: 7000,
       positionClass: 'toast-bottom-right',

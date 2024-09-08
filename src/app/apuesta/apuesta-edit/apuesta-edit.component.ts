@@ -109,6 +109,9 @@ export class ApuestaEditComponent implements OnInit {
           if (error.statusText === "UNAUTHORIZED") {
             this.showWarning("Su sesión ha caducado, por favor vuelva a iniciar sesión.")
           }
+          else if (error.statusText === "BAD REQUEST") {
+            this.showError("No tiene suficiente saldo para realizar esta apuesta.")
+          }
           else if (error.statusText === "UNPROCESSABLE ENTITY") {
             this.showError("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")
           }
@@ -136,7 +139,6 @@ export class ApuestaEditComponent implements OnInit {
             this.showError("Ha ocurrido un error. " + error.message)
           }
         })
-    throw new Error('Method not implemented.');
   }
 
   showError(error: string) {

@@ -55,47 +55,19 @@ export class ApuestaCreateBettorComponent implements OnInit {
   }
 
   createApuesta(newApuesta: Apuesta) {
-    var canBet: boolean = false;
-    this.userService.getUserTransactions(this.userId, this.token)
-      .subscribe(transacciones => {
-        if (transacciones.length > 0) {
-          var saldo = 0
-
-          for (const transaccion of transacciones) {
-            if (transaccion.tipo === "recarga" || transaccion.tipo === "ganancia") {
-              saldo += transaccion.valor;
-            } else if (transaccion.tipo === "retiro" || transaccion.tipo === "apuesta") {
-              saldo -= transaccion.valor;
-            }
-          }
-          canBet = saldo > 0;
-          if (canBet) {
-            newApuesta.id_carrera = this.carrera.id
-            this.apuestaService.crearApuesta(newApuesta, this.token)
-              .subscribe(apuesta => {
-                this.showSuccess(apuesta)
-                this.apuestaForm.reset()
-                this.routerPath.navigate([`/carreras/${this.userId}/${this.token}`])
-              },
-                error => {
-                  if (error.statusText === "UNAUTHORIZED") {
-                    this.showWarning("Su sesión ha caducado, por favor vuelva a iniciar sesión.")
-                  }
-                  else if (error.statusText === "UNPROCESSABLE ENTITY") {
-                    this.showError("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")
-                  }
-                  else {
-                    this.showError("Ha ocurrido un error. " + error.message)
-                  }
-                })
-          } else {
-            this.showError("No cuenta con dinero suficiente para hacer esta apuesta. Revise el saldo de su cuenta.")
-          }
-        }
+    newApuesta.id_carrera = this.carrera.id
+    this.apuestaService.crearApuesta(newApuesta, this.token)
+      .subscribe(apuesta => {
+        this.showSuccess(apuesta)
+        this.apuestaForm.reset()
+        this.routerPath.navigate([`/carreras/${this.userId}/${this.token}`])
       },
         error => {
           if (error.statusText === "UNAUTHORIZED") {
             this.showWarning("Su sesión ha caducado, por favor vuelva a iniciar sesión.")
+          }
+          else if (error.statusText === "BAD REQUEST") {
+            this.showError(error.error)
           }
           else if (error.statusText === "UNPROCESSABLE ENTITY") {
             this.showError("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")

@@ -42,7 +42,7 @@ export class CarreraReportComponent implements OnInit {
 
           if (reporteCarrera.carrera.apuestas.length > 0) {
             for (let apuesta of reporteCarrera.carrera.apuestas) {
-              this.carrera.apuestas.push(new Apuesta(apuesta.id, apuesta.valor_apostado, apuesta.ganancia, apuesta.nombre_apostador, apuesta.id_competidor, apuesta.id_carrera));
+              this.carrera.apuestas.push(new Apuesta(apuesta.id, apuesta.valor_apostado, apuesta.ganancia, apuesta.apostador, apuesta.id_competidor, apuesta.id_carrera));
             }
           }
 
