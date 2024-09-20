@@ -12,7 +12,7 @@ import { CarreraService } from '../carrera.service';
 
 export class CarreraReportComponent implements OnInit {
 
-  carrera: Carrera;
+  evento: Carrera;
   userId: number;
   token: string;
   gananciaCasa: number;
@@ -32,17 +32,17 @@ export class CarreraReportComponent implements OnInit {
       this.token = this.router.snapshot.params.userToken
       this.carreraService.verReporteCarrera(this.token, parseInt(this.router.snapshot.params.carreraId))
         .subscribe(reporteCarrera => {
-          this.carrera = new Carrera(reporteCarrera.carrera.id, reporteCarrera.carrera.nombre_carrera, reporteCarrera.abierta, this.userId, [], [])
+          this.evento = new Carrera(reporteCarrera.evento.id, reporteCarrera.evento.nombre, "", "", "CARRERA", "", reporteCarrera.abierta, this.userId, [], [])
 
-          if (reporteCarrera.carrera.competidores.length > 0) {
-            for (let competidor of reporteCarrera.carrera.competidores) {
-              this.carrera.competidores.push(new Competidor(competidor.id, competidor.nombre_competidor, competidor.probabilidad));
+          if (reporteCarrera.evento.posibles_resultados.length > 0) {
+            for (let competidor of reporteCarrera.evento.posibles_resultados) {
+              this.evento.posibles_resultados.push(new Competidor(competidor.id, "COMPETIDOR", competidor.posible_resultado, competidor.probabilidad));
             }
           }
 
-          if (reporteCarrera.carrera.apuestas.length > 0) {
-            for (let apuesta of reporteCarrera.carrera.apuestas) {
-              this.carrera.apuestas.push(new Apuesta(apuesta.id, apuesta.valor_apostado, apuesta.ganancia, apuesta.apostador, apuesta.id_competidor, apuesta.id_carrera));
+          if (reporteCarrera.evento.apuestas.length > 0) {
+            for (let apuesta of reporteCarrera.evento.apuestas) {
+              this.evento.apuestas.push(new Apuesta(apuesta.id, apuesta.valor_apostado, apuesta.ganancia, apuesta.apostador, apuesta.id_posible_resultado, apuesta.id_evento));
             }
           }
 
@@ -65,11 +65,11 @@ export class CarreraReportComponent implements OnInit {
   }
 
   showSuccess(carrera: Carrera) {
-    this.toastr.success(`La carrera ${carrera.nombre_carrera} fue editada`, "Edición exitosa");
+    this.toastr.success(`La carrera ${carrera.nombre} fue editada`, "Edición exitosa");
   }
 
   backToDetails() {
-    this.routerPath.navigate([`/carreras/${this.userId}/${this.token}`])
+    this.routerPath.navigate([`/eventos/${this.userId}/${this.token}`])
   }
 
 }

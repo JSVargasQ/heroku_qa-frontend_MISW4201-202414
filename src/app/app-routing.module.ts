@@ -17,62 +17,62 @@ const routes: Routes = [
   {
     path: '',
     component: UsuarioLoginComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'signin',
     component: UsuarioLoginComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'signup',
     component: UsuarioSignupComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
-    path: 'carreras/:userId/:userToken',
-    component: CarreraListComponent
+    path: 'eventos/:userId/:userToken',
+    component: CarreraListComponent,
   },
   {
-    path: 'carreras/crear/:userId/:userToken',
-    component: CarreraCreateComponent
+    path: 'eventos/crear/:userId/:userToken',
+    component: CarreraCreateComponent,
   },
   {
-    path: 'carreras/editar/:carreraId/:userId/:userToken',
-    component: CarreraEditComponent
+    path: 'eventos/editar/:carreraId/:userId/:userToken',
+    component: CarreraEditComponent,
   },
   {
-    path: 'carreras/terminar/:carreraId/:userId/:userToken',
-    component: CarreraFinishComponent
+    path: 'eventos/terminar/:carreraId/:userId/:userToken',
+    component: CarreraFinishComponent,
   },
   {
-    path: 'carreras/reporte/:carreraId/:userId/:userToken',
-    component: CarreraReportComponent
+    path: 'eventos/reporte/:carreraId/:userId/:userToken',
+    component: CarreraReportComponent,
   },
   {
-    path: 'carreras/apostar/:carreraId/:userId/:userToken',
-    component: ApuestaCreateBettorComponent
+    path: 'eventos/apostar/:carreraId/:userId/:userToken',
+    component: ApuestaCreateBettorComponent,
   },
   {
     path: 'apuestas/:userId/:userToken',
-    component: ApuestaListComponent
+    component: ApuestaListComponent,
   },
   {
     path: 'apuestas/crear/:userId/:userToken',
-    component: ApuestaCreateComponent
+    component: ApuestaCreateComponent,
   },
   {
     path: 'apuestas/editar/:apuestaId/:userId/:userToken',
-    component: ApuestaEditComponent
+    component: ApuestaEditComponent,
   },
   {
     path: 'cuenta/:userId/:userToken',
-    component: CuentaDetailComponent
-  }
+    component: CuentaDetailComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -1,9 +1,98 @@
 <app-header></app-header>
-<div class="container">
+<div class="container my-4">
     <div class="row">
-        <div class="col-12 mb-2">
-            <label class="fs-4 fw-bold">Saldo actual:</label>
-            <span class="fs-4">  {{ saldoActual | currency:'$':'symbol':'1.2-2' }}</span>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header">
+                    <div class="text-center">
+                        <label class="fs-4">Saldo actual</label>
+                    </div>                    
+                </div>
+                <div class="card-body text-center">
+                    <span class="fs-4">  {{ saldoActual | currency:'$':'symbol':'1.2-2' }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div>
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#recargarSaldoModal">Recargar saldo</button>
+            </div>
+            <div class="mt-3">
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#retirarSaldoModal">Retirar saldo</button>
+            </div>
         </div>
     </div>
+    <div class="row mt-3">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3>Historial de movimientos</h3>
+          </div>
+          <div class="card-body table-responsive table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Tipo de movimiento</th>
+                  <th>Monto</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let transaction of transactions">
+                  <td>{{ transaction.fecha_creacion | date : "dd/MM/yyyy" }}</td>
+                  <td>{{ getTransactionType(transaction.tipo) }}</td>
+                  <td>{{ transaction.valor | currency:'$':'symbol':'1.2-2' }}</td>
+                  <td>
+                    <i *ngIf="transaction.valor > 0" class="fas fa-arrow-up text-success"></i>
+                    <i *ngIf="transaction.valor < 0" class="fas fa-arrow-down text-danger"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal Recarga-->
+<div #recargarSaldoModal class="modal fade" id="recargarSaldoModal" tabindex="-1" aria-labelledby="recargarSaldoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="recargarSaldoModalLabel">Ingresar dinero</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="onSubmitRecarga()">
+          <div class="mb-3">
+            <label for="saldo" class="form-label">Monto</label>
+            <input type="number" class="form-control" id="saldo" [(ngModel)]="recarga" name="saldo" required placeholder="Ingrese el valor">
+          </div>
+          <button [disabled]="!recarga || recarga <= 0" type="submit" class="btn btn-primary"  data-bs-dismiss="modal">Recargar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Retiro-->
+<div #retirarSaldoModal class="modal fade" id="retirarSaldoModal" tabindex="-1" aria-labelledby="retirarSaldoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="retirarSaldoModalLabel">Retirar dinero</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="onSubmitRetiro()">
+          <div class="mb-3">
+            <label for="saldo" class="form-label">Monto</label>
+            <input type="number" class="form-control" id="saldo" [(ngModel)]="retiro" name="saldo" required placeholder="Ingrese el valor">
+          </div>
+          <button [disabled]="!retiro || retiro<=0" type="submit" class="btn btn-primary" data-bs-dismiss="modal" >Retirar</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

@@ -12,6 +12,7 @@ import { ApuestaService } from '../apuesta.service';
 export class ApuestaDetailComponent implements OnInit {
 
   @Input() carrera: string;
+  @Input() tipo: string;
   @Input() competidor: string;
   @Input() inputApuesta: Apuesta;
 

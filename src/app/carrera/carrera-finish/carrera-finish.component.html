@@ -6,8 +6,8 @@
         <div class="card-header">
           <div class="row">
             <div class="col-12 text-center">
-              <label class="fs-4">Elija el competidor ganador de la carrera
-                <strong>{{carrera?.nombre_carrera}}</strong></label>
+              <label class="fs-4">Elija el resultado ganador de el evento
+                <strong>{{evento?.nombre}}</strong></label>
             </div>
           </div>
         </div>
@@ -18,13 +18,13 @@
   <form class="mx-5 my-3" [formGroup]="competidorGanadorForm" (ngSubmit)="terminarCarrera(competidorGanadorForm.value)">
     <div class="row">
       <div class="col col-2">
-        Competidor ganador:
+       Posibles {{ evento?.tipo === 'Carrera' ? 'competidores' : 'resultados'  }}:
       </div>
       <div class="col col-4">
-        <select formControlName="id_competidor" class="form-control">
-          <option value="">Selecciona un competidor...</option>
+        <select formControlName="id_posible_resultado" class="form-control">
+          <option value="">Selecciona un {{evento?.tipo === 'Carrera' ? 'competidor' : 'marcaor'}}...</option>
           <option *ngFor="let item of competidores" value="{{ item.id }}">
-            {{ item.nombre_competidor }}
+            {{ item.posible_resultado }}
           </option>
         </select>
       </div>

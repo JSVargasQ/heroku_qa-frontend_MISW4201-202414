@@ -14,14 +14,14 @@
           <div class="form-group my-2">
             <div class="row">
               <div class="col-2 text-start">
-                <label for="id_carrera">Carrera</label>
+                <label for="id_evento">Carrera</label>
               </div>
               <div class="col-10">
-                <select formControlName="id_carrera" class="form-control" (change)="
-                  onCarreraSelect($event.target.value)">
+                <select formControlName="id_evento" class="form-control" (change)="
+                  onEventoSelect($event.target.value)">
                   <option value="">Selecciona una carrera...</option>
-                  <option *ngFor="let item of carreras" value="{{ item.id }}">
-                    {{ item.nombre_carrera }}
+                  <option *ngFor="let item of eventos" value="{{ item.id }}">
+                    {{ item.nombre }}
                   </option>
                 </select>
               </div>
@@ -29,7 +29,7 @@
             <div class="row justify-content-center">
               <div class="col-8">
                 <div class="alert alert-danger my-3"
-                  *ngIf="apuestaForm.get('id_carrera')?.hasError('required') && apuestaForm.get('id_carrera')?.touched">
+                  *ngIf="apuestaForm.get('id_evento')?.hasError('required') && apuestaForm.get('id_evento')?.touched">
                   Debe seleccionar la carrera
                 </div>
               </div>
@@ -39,13 +39,13 @@
           <div class="form-group my-2">
             <div class="row">
               <div class="col-2 text-start">
-                <label for="id_competidor">Competidor</label>
+                <label for="id_posible_resultado">Competidor</label>
               </div>
               <div class="col-10">
-                <select formControlName="id_competidor" class="form-control">
+                <select formControlName="id_posible_resultado" class="form-control">
                   <option value="">Selecciona un competidor...</option>
-                  <option *ngFor="let item of competidores" value="{{ item.id }}">
-                    {{ item.nombre_competidor }}
+                  <option *ngFor="let item of posibles_resultados" value="{{ item.id }}">
+                    {{ item.posible_resultado }}
                   </option>
                 </select>
               </div>
@@ -53,7 +53,7 @@
             <div class="row justify-content-center">
               <div class="col-8">
                 <div class="alert alert-danger my-3"
-                  *ngIf="apuestaForm.get('id_competidor')?.hasError('required') && apuestaForm.get('id_competidor')?.touched">
+                  *ngIf="apuestaForm.get('id_posible_resultado')?.hasError('required') && apuestaForm.get('id_posible_resultado')?.touched">
                   Debe seleccionar un competidor
                 </div>
               </div>

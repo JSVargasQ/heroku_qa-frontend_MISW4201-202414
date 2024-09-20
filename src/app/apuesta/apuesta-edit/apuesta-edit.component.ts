@@ -20,8 +20,8 @@ export class ApuestaEditComponent implements OnInit {
   token: string;
   apuestaId: number;
   apuestaForm!: FormGroup;
-  carreras: Array<Carrera>
-  competidores: Array<Competidor>
+  eventos: Array<Carrera>
+  posibles_resultados: Array<Competidor>
   apostadores: Array<Usuario>
 
   constructor(
@@ -36,12 +36,12 @@ export class ApuestaEditComponent implements OnInit {
   initializeForm()
   {
     this.apuestaForm = new FormGroup({
-      id_carrera: new FormControl(),
-      id_competidor: new FormControl(),
+      id_evento: new FormControl(),
+      id_posible_resultado: new FormControl(),
       id_apostador: new FormControl(),
       valor_apostado: new FormControl()
     });
-  }  
+  }
 
   ngOnInit() {
     if (!parseInt(this.router.snapshot.params.userId) || this.router.snapshot.params.userToken === " ") {
@@ -54,29 +54,29 @@ export class ApuestaEditComponent implements OnInit {
         .subscribe(apuesta => {
           this.apuestaId = apuesta.id
           this.apuestaForm = this.formBuilder.group({
-            id_carrera: [apuesta.id_carrera, [Validators.required]],
-            id_competidor: [apuesta.id_competidor, [Validators.required]],
+            id_evento: [apuesta.id_evento, [Validators.required]],
+            id_posible_resultado: [apuesta.id_posible_resultado, [Validators.required]],
             id_apostador: [apuesta.apostador.id, [Validators.required]],
             valor_apostado: [Number(apuesta.valor_apostado).toFixed(2), [Validators.required]]
           })
-          this.getCarreras(apuesta.id_carrera)
+          this.getCarreras(apuesta.id_evento)
           this.getApostadores()
         })
     }
   }
 
-  onCarreraSelect(event: any): void {
+  onEventoSelect(event: any): void {
     if (event != null && event != "") {
-      var carreraSeleccionada = this.carreras.filter(x => x.id == event)[0]
-      this.competidores = carreraSeleccionada.competidores
+      var carreraSeleccionada = this.eventos.filter(x => x.id == event)[0]
+      this.posibles_resultados = carreraSeleccionada.posibles_resultados
     }
   }
 
-  getCarreras(id_carrera: number): void {
+  getCarreras(id_evento: number): void {
     this.carreraService.getCarreras(this.userId, this.token)
-      .subscribe(carreras => {
-        this.carreras = carreras
-        this.onCarreraSelect(id_carrera)
+      .subscribe(eventos => {
+        this.eventos = eventos
+        this.onEventoSelect(id_evento)
       },
         error => {
           console.log(error)
@@ -121,7 +121,7 @@ export class ApuestaEditComponent implements OnInit {
         })
   }
 
-  
+
   getApostadores() {
     this.usuarioService.getApostadores(this.token)
       .subscribe(apostadores => {

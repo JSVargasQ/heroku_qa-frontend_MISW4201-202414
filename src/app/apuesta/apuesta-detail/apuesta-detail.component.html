@@ -17,10 +17,10 @@
       <table class="table table-hover table-bordered">
         <thead class="table-light">
           <tr>
-            <th scope="col" class="text-center">Carrera</th>
-            <th scope="col" class="text-center">Competidor</th>
-            <th scope="col" class="text-center">Apostador</th>
-            <th scope="col" class="text-center">Valor apostado</th>
+            <th scope="col" class="text-center middle-text">{{ tipo === 'Carrera' ? 'Carrera' : 'Partido' }}</th>
+            <th scope="col" class="text-center middle-text">{{ tipo === 'Carrera' ? 'Competidor' : 'Posible resultado' }}</th>
+            <th scope="col" class="text-center middle-text">Apostador</th>
+            <th scope="col" class="text-center middle-text">Valor apostado</th>
           </tr>
         </thead>
         <tbody>

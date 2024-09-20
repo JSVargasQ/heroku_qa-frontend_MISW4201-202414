@@ -41,8 +41,8 @@ export class ApuestaCreateComponent implements OnInit {
       this.userId = parseInt(this.router.snapshot.params.userId)
       this.token = this.router.snapshot.params.userToken
       this.apuestaForm = this.formBuilder.group({
-        id_carrera: ["", [Validators.required]],
-        id_competidor: ["", [Validators.required]],
+        id_evento: ["", [Validators.required]],
+        id_posible_resultado: ["", [Validators.required]],
         id_apostador: ["", [Validators.required]],
         valor_apostado: [0, [Validators.required]]
       })
@@ -54,7 +54,7 @@ export class ApuestaCreateComponent implements OnInit {
   onCarreraSelect(event: any): void {
     if (event != null && event != "") {
       var carreraSeleccionada = this.carreras.filter(x => x.id == event)[0]
-      this.competidores = carreraSeleccionada.competidores
+      this.competidores = carreraSeleccionada.posibles_resultados
     }
   }
 

@@ -27,7 +27,8 @@ export class ApuestaListComponent implements OnInit {
   mostrarApuestas: Array<Apuesta>
   apuestaSeleccionada: Apuesta
   indiceSeleccionado: number = 0
-  nombreCarrera: string
+  nombreEvento: string
+  tipoEvento: string;
   nombreCompetidor: string
 
 
@@ -60,11 +61,12 @@ export class ApuestaListComponent implements OnInit {
   }
 
   getInfo(): void {
-    this.carreraService.getCarrera(this.apuestaSeleccionada.id_carrera, this.token)
-      .subscribe(carrera => {
-        this.nombreCarrera = carrera.nombre_carrera
-        var competidor = carrera.competidores.filter(x => x.id == this.apuestaSeleccionada.id_competidor)[0]
-        this.nombreCompetidor = competidor.nombre_competidor
+    this.carreraService.getCarrera(this.apuestaSeleccionada.id_evento, this.token)
+      .subscribe(evento => {
+        this.nombreEvento = evento.nombre
+        this.tipoEvento = evento.tipo
+        var competidor = evento.posibles_resultados.filter(x => x.id == this.apuestaSeleccionada.id_posible_resultado)[0]
+        this.nombreCompetidor = competidor.posible_resultado
       },
         error => {
           if (error.statusText === "UNAUTHORIZED") {

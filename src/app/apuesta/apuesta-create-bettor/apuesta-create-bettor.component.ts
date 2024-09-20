@@ -44,10 +44,10 @@ export class ApuestaCreateBettorComponent implements OnInit {
       this.carreraService.getCarrera(parseInt(this.router.snapshot.params.carreraId), this.token)
         .subscribe(carrera => {
           this.carrera = carrera
-          this.competidores = carrera.competidores
+          this.competidores = carrera.posibles_resultados
         })
       this.apuestaForm = this.formBuilder.group({
-        id_competidor: ["", [Validators.required]],
+        id_posible_resultado: ["", [Validators.required]],
         id_apostador: [this.userId, [Validators.required]],
         valor_apostado: [0, [Validators.required, Validators.min(1)]]
       })
@@ -55,12 +55,12 @@ export class ApuestaCreateBettorComponent implements OnInit {
   }
 
   createApuesta(newApuesta: Apuesta) {
-    newApuesta.id_carrera = this.carrera.id
+    newApuesta.id_evento = this.carrera.id
     this.apuestaService.crearApuesta(newApuesta, this.token)
       .subscribe(apuesta => {
         this.showSuccess(apuesta)
         this.apuestaForm.reset()
-        this.routerPath.navigate([`/carreras/${this.userId}/${this.token}`])
+        this.routerPath.navigate([`/eventos/${this.userId}/${this.token}`])
       },
         error => {
           if (error.statusText === "UNAUTHORIZED") {
@@ -79,8 +79,8 @@ export class ApuestaCreateBettorComponent implements OnInit {
   }
 
   cancelCreate() {
-    this.apuestaForm.reset()
-    this.routerPath.navigate([`/carreras/apostar/${this.carrera.id}/${this.userId}/${this.token}`])
+    this.apuestaForm.reset();
+    this.routerPath.navigate([`/eventos/${this.userId}/${this.token}`])
   }
 
   showError(error: string) {

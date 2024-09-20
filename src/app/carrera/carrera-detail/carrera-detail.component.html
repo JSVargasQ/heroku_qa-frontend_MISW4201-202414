@@ -1,46 +1,87 @@
 <div class="container">
-
   <div class="row">
     <div class="col-12 text-center mb-2" *ngIf="isAdmin">
-      <label class="fs-4 fw-bold">{{carrera?.nombre_carrera}}</label>
-      <button [disabled]="!carrera?.abierta" *ngIf="carrera" type="button" class="btn btn-outline-success ms-3 me-2"
-        (click)="goToEdit()" title="Editar carrera"><i class="bi bi-pencil-square"></i></button>
-      <button [disabled]="!carrera?.abierta" *ngIf="carrera" type="button" class="btn btn-outline-danger me-1"
-        (click)="eliminarCarrera()" title="Eliminar carrera"><i class="bi bi-trash"></i></button>
-      <button *ngIf="carrera?.abierta == true && carrera?.apuestas.length > 0" type="button"
-        class="btn btn-outline-success ms-1 me-2" (click)="terminarCarrera()" title="Terminar carrera"><i
-          class="bi bi-flag-fill"></i></button>
+      <label class="fs-4 fw-bold"
+        >{{ evento?.nombre }} - {{ evento?.tipo }}</label
+      >
+      <button
+        [disabled]="!evento?.abierta"
+        *ngIf="evento"
+        type="button"
+        class="btn btn-outline-success ms-3 me-2"
+        (click)="goToEdit()"
+        title="Editar evento"
+      >
+        <i class="bi bi-pencil-square"></i>
+      </button>
+      <button
+        [disabled]="!evento?.abierta"
+        *ngIf="evento"
+        type="button"
+        class="btn btn-outline-danger me-1"
+        (click)="eliminarCarrera()"
+        title="Eliminar evento"
+      >
+        <i class="bi bi-trash"></i>
+      </button>
+      <button
+        *ngIf="evento?.abierta == true && evento?.apuestas.length > 0"
+        type="button"
+        class="btn btn-outline-success ms-1 me-2"
+        (click)="terminarCarrera()"
+        title="Terminar evento"
+      >
+        <i class="bi bi-flag-fill"></i>
+      </button>
     </div>
     <div class="col-12 text-center mb-2" *ngIf="!isAdmin">
-      <label class="fs-4 fw-bold">{{carrera?.nombre_carrera}}</label>
-      <button [disabled]="!carrera?.abierta" *ngIf="carrera" type="button" class="btn btn-outline-primary ms-5 me-2"
-        (click)="apostar()" title="Apostar">Apostar</button>
+      <label class="fs-4 fw-bold"
+        >{{ evento?.nombre }} - {{ evento?.tipo }}
+      </label>
+      <button
+        [disabled]="!evento?.abierta"
+        *ngIf="evento"
+        type="button"
+        class="btn btn-outline-primary ms-5 me-2"
+        (click)="apostar()"
+        title="Apostar"
+      >
+        Apostar
+      </button>
     </div>
   </div>
 
   <div class="row">
     <div class="col-12 mt-3 mb-2 ms-2">
-      <h5>Competidores</h5>
+      <h5>
+        {{ evento?.tipo === "Carrera" ? "Competidores" : "Posiles resultados" }}
+      </h5>
     </div>
     <div class="col-12">
       <table class="table table-hover table-bordered">
         <thead class="table-light">
           <tr>
-            <th scope="col" class="text-center">Competidor</th>
+            <th scope="col" class="text-center">
+              {{
+                evento?.tipo === "Carrera" ? "Competidor" : "Posible resultado"
+              }}
+            </th>
             <th scope="col" class="text-center">Probabilidad de ganar</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let competidor of carrera?.competidores">
-            <td>{{competidor.nombre_competidor}}</td>
-            <td class="text-center">{{competidor.probabilidad | number:'1.2-2'}}</td>
+          <tr *ngFor="let competidor of evento?.posibles_resultados">
+            <td>{{ competidor.posible_resultado }}</td>
+            <td class="text-center">
+              {{ competidor.probabilidad | number : "1.2-2" }}
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 
-  <div *ngIf="carrera?.apuestas.length > 0" class="row">
+  <div *ngIf="isAdmin && evento?.apuestas.length > 0" class="row">
     <div class="col-12 mt-3 mb-2 ms-2">
       <h5>Apuestas</h5>
     </div>
@@ -49,15 +90,55 @@
         <thead class="table-light">
           <tr>
             <th scope="col" class="text-center">Apostador</th>
-            <th scope="col" class="text-center">Competidor</th>
+            <th scope="col" class="text-center">
+              {{
+                evento?.tipo === "Carrera" ? "Competidor" : "Posible resultado"
+              }}
+            </th>
             <th scope="col" class="text-center">Valor apostado</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let apuesta of carrera?.apuestas">
-            <td>{{apuesta.apostador.nombres}} {{apuesta.apostador.apellidos}}</td>
-            <td class="text-center">{{ getCompetidor(apuesta.id_competidor) }}</td>
-            <td class="text-center">{{apuesta.valor_apostado | number:'1.2-2'}}</td>
+          <tr *ngFor="let apuesta of evento?.apuestas">
+            <td>
+              {{ apuesta.apostador.nombres }} {{ apuesta.apostador.apellidos }}
+            </td>
+            <td class="text-center">
+              {{ getCompetidor(apuesta.id_posible_resultado) }}
+            </td>
+            <td class="text-center">
+              {{ apuesta.valor_apostado | number : "1.2-2" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="!isAdmin" class="row">
+    <div class="col-12 mt-3 mb-2 ms-2">
+      <h5>Mis apuestas</h5>
+    </div>
+    <div class="col-12">
+      <table class="table table-hover table-bordered">
+        <thead class="table-light">
+          <tr>
+            <th scope="col" class="text-center">
+              {{
+                evento?.tipo === "Carrera" ? "Competidor" : "Posible resultado"
+              }}
+            </th>
+            <th scope="col" class="text-center">Valor apostado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let apuesta of evento?.apuestas">
+            <td class="text-center">
+              {{ getCompetidor(apuesta.id_posible_resultado) }}
+            </td>
+            <td class="text-center">
+              {{ apuesta.valor_apostado | number : "1.2-2" }}
+            </td>
           </tr>
         </tbody>
       </table>

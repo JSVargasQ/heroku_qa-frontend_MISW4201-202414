@@ -70,10 +70,10 @@ export class CarreraListComponent implements OnInit {
     this.carreraSeleccionada = a
   }
 
-  buscarCarrera(busqueda: string) {
+  buscarEvento(busqueda: string) {
     let carrerasBusqueda: Array<Carrera> = []
     this.carreras.map(carrera => {
-      if (carrera.nombre_carrera.toLocaleLowerCase().includes(busqueda.toLowerCase())) {
+      if (carrera.nombre.toLocaleLowerCase().includes(busqueda.toLowerCase())) {
         carrerasBusqueda.push(carrera)
       }
     })
@@ -81,7 +81,7 @@ export class CarreraListComponent implements OnInit {
   }
 
   irCrearCarrera() {
-    this.routerPath.navigate([`/carreras/crear/${this.userId}/${this.token}`])
+    this.routerPath.navigate([`/eventos/crear/${this.userId}/${this.token}`])
   }
 
   showError(error: string) {

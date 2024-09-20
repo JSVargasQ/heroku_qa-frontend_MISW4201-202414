@@ -24,7 +24,7 @@ export class UsuarioLoginComponent implements OnInit {
       (res) => {
         const decodedToken = this.helper.decodeToken(res.token);
         localStorage.setItem('userRole', res.rol);
-        this.router.navigate([`/carreras/${decodedToken.sub}/${res.token}`]);
+        this.router.navigate([`/eventos/${decodedToken.sub}/${res.token}`]);
       },
       (error) => {
         this.error = true;

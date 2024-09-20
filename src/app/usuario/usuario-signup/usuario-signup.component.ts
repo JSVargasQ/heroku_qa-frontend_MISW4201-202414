@@ -39,7 +39,8 @@ export class UsuarioSignupComponent implements OnInit {
     this.usuarioService.userSignUp(this.usuarioForm.value).subscribe(
       (res) => {
         const decodedToken = this.helper.decodeToken(res.token);
-        this.router.navigate([`/carreras/${decodedToken.sub}/${res.token}`]);
+        this.router.navigate([`/eventos/${decodedToken.sub}/${res.token}`]);
+        localStorage.setItem('userRole', res.rol);
         this.showSuccess();
       },
       (error) => {

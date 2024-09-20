@@ -13,7 +13,7 @@ import { CarreraService } from '../carrera.service';
 
 export class CarreraFinishComponent implements OnInit {
 
-  carrera: Carrera;
+  evento: Carrera;
   userId: number;
   token: string;
   competidores: Array<Competidor>
@@ -36,13 +36,13 @@ export class CarreraFinishComponent implements OnInit {
       this.token = this.router.snapshot.params.userToken
 
       this.competidorGanadorForm = this.formBuilder.group({
-        id_competidor: ["", [Validators.required]]
+        id_posible_resultado: ["", [Validators.required]]
       });
 
       this.carreraService.getCarrera(parseInt(this.router.snapshot.params.carreraId), this.token)
         .subscribe(carreraEncontrada => {
-          this.carrera = carreraEncontrada
-          this.competidores = carreraEncontrada.competidores
+          this.evento = carreraEncontrada
+          this.competidores = carreraEncontrada.posibles_resultados
         })
     }
   }
@@ -60,10 +60,10 @@ export class CarreraFinishComponent implements OnInit {
   }
 
   terminarCarrera(form: any) {
-    this.carreraService.actualizarGanador(this.token, form.id_competidor)
+    this.carreraService.actualizarGanador(this.token, form.id_posible_resultado)
       .subscribe(competidor => {
         this.competidorGanador = competidor
-        this.routerPath.navigate([`carreras/reporte/${this.carrera.id}/${this.userId}/${this.token}`])
+        this.routerPath.navigate([`eventos/reporte/${this.evento.id}/${this.userId}/${this.token}`])
       },
         error => {
           if (error.statusText === "UNAUTHORIZED") {
@@ -77,4 +77,4 @@ export class CarreraFinishComponent implements OnInit {
           }
         })
   }
-}  
+}

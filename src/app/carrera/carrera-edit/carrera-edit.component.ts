@@ -24,7 +24,7 @@ export class CarreraEditComponent implements OnInit {
     private router: ActivatedRoute,
     private toastr: ToastrService,
     private routerPath: Router) { this.initializeForm(); }
-  
+
   initializeForm()
   {
     this.carreraForm = new FormGroup({
@@ -32,7 +32,7 @@ export class CarreraEditComponent implements OnInit {
       competidores: new FormArray([])
     });
 
-  }  
+  }
 
   ngOnInit() {
     if (!parseInt(this.router.snapshot.params.userId) || this.router.snapshot.params.userToken === " ") {
@@ -45,12 +45,12 @@ export class CarreraEditComponent implements OnInit {
         .subscribe(carrera => {
           this.carreraId = carrera.id
           this.carreraForm = this.formBuilder.group({
-            nombre: [carrera.nombre_carrera, [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
+            nombre: [carrera.nombre, [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
             competidores: new FormArray([])
           })
 
-          if (carrera.competidores.length > 0) {
-            carrera.competidores.forEach((item, index) => {
+          if (carrera.posibles_resultados.length > 0) {
+            carrera.posibles_resultados.forEach((item, index) => {
               this.competidorformArray.push(this.createCompetidorForm(item));
             });
           }
@@ -69,7 +69,7 @@ export class CarreraEditComponent implements OnInit {
   private createCompetidorForm(item?: any): FormGroup {
     return this.formBuilder.group({
       id: [item == null ? '' : item.id],
-      competidor: [item == null ? '' : item.nombre_competidor, [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
+      competidor: [item == null ? '' : item.posible_resultado, [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
       probabilidad: [item == null ? '' : Number(item.probabilidad).toFixed(2), [Validators.required, Validators.min(0), Validators.max(1)]]
     });
   }
@@ -84,7 +84,7 @@ export class CarreraEditComponent implements OnInit {
 
   cancelCreate() {
     this.carreraForm.reset()
-    this.routerPath.navigate([`/carreras/${this.userId}/${this.token}`])
+    this.routerPath.navigate([`/eventos/${this.userId}/${this.token}`])
   }
 
   editarCarrera(newCarrera: Carrera) {
@@ -92,7 +92,7 @@ export class CarreraEditComponent implements OnInit {
       .subscribe(carrera => {
         this.showSuccess(carrera)
         this.carreraForm.reset()
-        this.routerPath.navigate([`/carreras/${this.userId}/${this.token}`])
+        this.routerPath.navigate([`/eventos/${this.userId}/${this.token}`])
       },
         error => {
           if (error.statusText === "UNAUTHORIZED") {
@@ -117,7 +117,7 @@ export class CarreraEditComponent implements OnInit {
   }
 
   showSuccess(carrera: Carrera) {
-    this.toastr.success(`La carrera ${carrera.nombre_carrera} fue editada`, "Edición exitosa");
+    this.toastr.success(`La carrera ${carrera.nombre} fue editada`, "Edición exitosa");
   }
 
 }

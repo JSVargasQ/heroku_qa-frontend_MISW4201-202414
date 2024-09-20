@@ -6,8 +6,8 @@
 				<div class="card-header">
 					<div class="row">
 						<div class="col-12 text-center">
-							<label class="fs-4">Reporte de ganancias carrera
-								<strong>{{carrera?.nombre_carrera}}</strong></label>
+							<label class="fs-4">Reporte de ganancias del evento
+								<strong>{{evento?.nombre}}</strong></label>
 						</div>
 					</div>
 				</div>
@@ -27,7 +27,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let apuesta of carrera?.apuestas">
+					<tr *ngFor="let apuesta of evento?.apuestas">
 						<td>{{apuesta.apostador.nombres}} {{apuesta.apostador.apellidos}}</td>
 						<td> {{ apuesta.ganancia | currency:'$':'symbol':'1.2-2' }}</td>
 					</tr>
@@ -51,7 +51,7 @@
 	<br />
 	<div class="row">
 		<div class="col-3">
-			<button class="btn btn-warning text-start" (click)="backToDetails()">Regresar a las carreras</button>
+			<button class="btn btn-warning text-start" (click)="backToDetails()">Regresar a los eventos</button>
 		</div>
 	</div>
 </div>

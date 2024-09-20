@@ -11,7 +11,7 @@ import { ApuestaModule } from './apuesta/apuesta.module';
 import { CarreraModule } from './carrera/carrera.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { CuentaModule } from './cuenta/cuenta.module';
-//Test comment
+
 @NgModule({
   declarations: [AppComponent],
   imports: [

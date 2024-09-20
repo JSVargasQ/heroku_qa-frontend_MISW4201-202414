@@ -1,18 +1,11 @@
-export class RegistroCuenta {
-    id: number;
-    fecha: string;
-    descripcion: string;
+export class Transaction {
+    fecha_creacion: Date;
+    tipo: string;
     valor: number;
-
-    constructor(
-        id: number,
-        fecha: string,
-        descripcion: string,
-        valor: number
-    ) {
-        this.id = id,
-            this.fecha = fecha,
-            this.descripcion = descripcion,
-            this.valor = valor
-    }
 }
+
+export class BalanceResponse {
+    balance: number;
+    transactions: Transaction[];
+}
+  

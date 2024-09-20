@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Carrera, Competidor } from './carrera';
+import { ApuestaApostador, Carrera, Competidor } from './carrera';
 import {environment} from "../../environments/environment";
 
 @Injectable({
@@ -17,49 +17,56 @@ export class CarreraService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this.http.get<Carrera[]>(`${this.backUrl}/usuario/${usuario}/carreras`, { headers: headers })
+    return this.http.get<Carrera[]>(`${this.backUrl}/usuario/${usuario}/eventos`, { headers: headers })
   }
 
   crearCarrera(idUsuario: number, token: string, carrera: Carrera): Observable<Carrera> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this.http.post<Carrera>(`${this.backUrl}/usuario/${idUsuario}/carreras`, carrera, { headers: headers })
+    return this.http.post<Carrera>(`${this.backUrl}/usuario/${idUsuario}/eventos`, carrera, { headers: headers })
   }
 
-  getCarrera(idCarrera: number, token: string): Observable<Carrera> {
+  getCarrera(idEvento: number, token: string): Observable<Carrera> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this.http.get<Carrera>(`${this.backUrl}/carrera/${idCarrera}`, { headers: headers })
+    return this.http.get<Carrera>(`${this.backUrl}/evento/${idEvento}`, { headers: headers })
   }
 
-  editarCarrera(token: string, idCarrera: number, carrera: Carrera): Observable<Carrera> {
+  editarCarrera(token: string, idEvento: number, carrera: Carrera): Observable<Carrera> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this.http.put<Carrera>(`${this.backUrl}/carrera/${idCarrera}`, carrera, { headers: headers })
+    return this.http.put<Carrera>(`${this.backUrl}/evento/${idEvento}`, carrera, { headers: headers })
   }
 
-  eliminarCarrera(token: string, idCarrera: number): Observable<Carrera> {
+  eliminarCarrera(token: string, idEvento: number): Observable<Carrera> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this.http.delete<Carrera>(`${this.backUrl}/carrera/${idCarrera}`, { headers: headers })
+    return this.http.delete<Carrera>(`${this.backUrl}/evento/${idEvento}`, { headers: headers })
   }
 
   actualizarGanador(token: string, idCompetidor: number): Observable<Competidor> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this.http.put<Competidor>(`${this.backUrl}/carrera/${idCompetidor}/terminacion`, { headers: headers })
+    return this.http.put<Competidor>(`${this.backUrl}/evento/${idCompetidor}/terminacion`, { headers: headers })
   }
 
-  verReporteCarrera(token: string, idCarrera: number): Observable<any> {
+  verReporteCarrera(token: string, idEvento: number): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this.http.get<Object>(`${this.backUrl}/carrera/${idCarrera}/reporte`, { headers: headers })
+    return this.http.get<Object>(`${this.backUrl}/evento/${idEvento}/reporte`, { headers: headers })
+  }
+
+  getApuestasApostador(token: string, idApostador: number): Observable<ApuestaApostador[]> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    return this.http.get<ApuestaApostador[]>(`${this.backUrl}/usuario/${idApostador}/apuestas`, { headers: headers })
   }
 
 }

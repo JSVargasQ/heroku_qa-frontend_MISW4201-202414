@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Carrera } from '../carrera';
+import { ApuestaApostador, Carrera } from '../carrera';
 import { CarreraService } from '../carrera.service';
 import { JwtHelperService } from "@auth0/angular-jwt";
 
@@ -14,11 +14,12 @@ export class CarreraDetailComponent implements OnInit {
 
   helper = new JwtHelperService();
 
-  @Input() carrera: Carrera;
+  @Input() evento: Carrera;
 
   userId: number;
   token: string;
   isAdmin: boolean = true
+  apuestas: ApuestaApostador[] = []
 
   constructor(
     private carreraService: CarreraService,
@@ -32,23 +33,44 @@ export class CarreraDetailComponent implements OnInit {
     this.token = this.router.snapshot.params.userToken
 
     this.isAdmin = this.helper.decodeToken(this.token)["rol"] === "Admin";
+
+    if (!this.isAdmin) {
+      this.getApuestas();
+    }
   }
 
-  getCompetidor(id_competidor: any) {
-    var competidor = this.carrera.competidores.filter(x => x.id == id_competidor)[0]
-    return competidor.nombre_competidor
+  getCompetidor(id_posible_resultado: any) {
+    var competidor = this.evento.posibles_resultados.filter(x => x.id == id_posible_resultado)[0]
+    return competidor.posible_resultado
+  }
+
+  getApuestas() {
+    this.carreraService.getApuestasApostador(this.token, this.userId).subscribe(apuestas => {
+      this.apuestas = apuestas
+    },
+      error => {
+        if (error.statusText === "UNAUTHORIZED") {
+          this.showWarning("Su sesión ha caducado, por favor vuelva a iniciar sesión.")
+        }
+        else if (error.statusText === "UNPROCESSABLE ENTITY") {
+          this.showError("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")
+        }
+        else {
+          this.showError("Ha ocurrido un error. " + error.message)
+        }
+      })
   }
 
   goToEdit() {
-    this.routerPath.navigate([`/carreras/editar/${this.carrera.id}/${this.userId}/${this.token}`])
+    this.routerPath.navigate([`/eventos/editar/${this.evento.id}/${this.userId}/${this.token}`])
   }
 
   apostar() {
-    this.routerPath.navigate([`/carreras/apostar/${this.carrera.id}/${this.userId}/${this.token}`])
+    this.routerPath.navigate([`/eventos/apostar/${this.evento.id}/${this.userId}/${this.token}`])
   }
 
   eliminarCarrera() {
-    this.carreraService.eliminarCarrera(this.token, this.carrera.id)
+    this.carreraService.eliminarCarrera(this.token, this.evento.id)
       .subscribe(carrera => {
         window.location.reload();
         this.showSuccess();
@@ -68,8 +90,9 @@ export class CarreraDetailComponent implements OnInit {
   }
 
   terminarCarrera() {
-    this.routerPath.navigate([`/carreras/terminar/${this.carrera.id}/${this.userId}/${this.token}`])
+    this.routerPath.navigate([`/eventos/terminar/${this.evento.id}/${this.userId}/${this.token}`])
   }
+
   showError(error: string) {
     this.toastr.error(error, "Error de autenticación")
   }
