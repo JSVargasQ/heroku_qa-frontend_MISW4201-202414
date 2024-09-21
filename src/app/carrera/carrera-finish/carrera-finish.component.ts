@@ -64,6 +64,7 @@ export class CarreraFinishComponent implements OnInit {
       .subscribe(competidor => {
         this.competidorGanador = competidor
         this.routerPath.navigate([`eventos/reporte/${this.evento.id}/${this.userId}/${this.token}`])
+
       },
         error => {
           if (error.statusText === "UNAUTHORIZED") {

@@ -16,22 +16,22 @@ export class CarreraEditComponent implements OnInit {
   token: string;
   carreraId: number;
   carreraForm!: FormGroup;
+  defaultTipoResultado: string;
 
-  constructor(
-
-    private carreraService: CarreraService,
+  constructor(private carreraService: CarreraService,
     private formBuilder: FormBuilder,
     private router: ActivatedRoute,
     private toastr: ToastrService,
-    private routerPath: Router) { this.initializeForm(); }
+    private routerPath: Router) {
+    this.initializeForm();
+  }
 
   initializeForm()
   {
     this.carreraForm = new FormGroup({
       nombre: new FormControl(),
-      competidores: new FormArray([])
+      posibles_resultados: new FormArray([])
     });
-
   }
 
   ngOnInit() {
@@ -46,9 +46,10 @@ export class CarreraEditComponent implements OnInit {
           this.carreraId = carrera.id
           this.carreraForm = this.formBuilder.group({
             nombre: [carrera.nombre, [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
-            competidores: new FormArray([])
+            posibles_resultados: new FormArray([])
           })
 
+          this.defaultTipoResultado = carrera.posibles_resultados[0].tipo.toUpperCase()
           if (carrera.posibles_resultados.length > 0) {
             carrera.posibles_resultados.forEach((item, index) => {
               this.competidorformArray.push(this.createCompetidorForm(item));
@@ -63,14 +64,15 @@ export class CarreraEditComponent implements OnInit {
   }
 
   get competidorformArray() {
-    return this.carreraFormControls.competidores as FormArray;
+    return this.carreraFormControls.posibles_resultados as FormArray;
   }
 
   private createCompetidorForm(item?: any): FormGroup {
     return this.formBuilder.group({
       id: [item == null ? '' : item.id],
-      competidor: [item == null ? '' : item.posible_resultado, [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
-      probabilidad: [item == null ? '' : Number(item.probabilidad).toFixed(2), [Validators.required, Validators.min(0), Validators.max(1)]]
+      posible_resultado: [item == null ? '' : item.posible_resultado, [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
+      probabilidad: [item == null ? '' : Number(item.probabilidad).toFixed(2), [Validators.required, Validators.min(0), Validators.max(1)]],
+      tipo: [item == null ? this.defaultTipoResultado : item.tipo.toUpperCase() ]
     });
   }
 
@@ -117,7 +119,7 @@ export class CarreraEditComponent implements OnInit {
   }
 
   showSuccess(carrera: Carrera) {
-    this.toastr.success(`La carrera ${carrera.nombre} fue editada`, "Edición exitosa");
+    this.toastr.success(`El evento ${carrera.nombre} fue editada`, "Edición exitosa");
   }
 
 }

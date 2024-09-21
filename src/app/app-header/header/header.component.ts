@@ -35,7 +35,9 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.token = this.router.snapshot.params.userToken
 
-    this.isAdmin = this.helper.decodeToken(this.token)["rol"] === "Admin";
+    if( this.helper.decodeToken(this.token) ) {
+      this.isAdmin = this.helper.decodeToken(this.token)["rol"] === "Admin";
+    }
 
     this.getUserInfo();
   }

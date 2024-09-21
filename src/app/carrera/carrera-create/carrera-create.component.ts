@@ -35,14 +35,16 @@ export class CarreraCreateComponent implements OnInit {
       this.userId = parseInt(this.router.snapshot.params.userId)
       this.token = this.router.snapshot.params.userToken
       this.eventoForm = this.formBuilder.group({
-        nombre: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
+        nombre: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
         tipo: ["", [Validators.required]],
-        fecha_inicio: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
-        fecha_fin: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
+        fecha_inicio: ["", [Validators.required]],
+        fecha_fin: ["", [Validators.required]],
         descripcion: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(500)]],
         equipo_1: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
         equipo_2: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
         posibles_resultados: new FormArray([])
+      }, {
+        validator: validarFechaFinPosteriorFechaInicio('fecha_inicio', 'fecha_fin')
       });
       this.competidorformArray.push(this.createCompetidorForm());
     }
@@ -129,4 +131,21 @@ export class CarreraCreateComponent implements OnInit {
     this.eventoForm.get('equipo_1')?.updateValueAndValidity();
     this.eventoForm.get('equipo_2')?.updateValueAndValidity();
   }
+}
+
+export function validarFechaFinPosteriorFechaInicio(controlName: string, matchControlName: string) {
+  return (formGroup: FormGroup) => {
+    const control = formGroup.controls[controlName];
+    const matchControl = formGroup.controls[matchControlName];
+
+    if (matchControl.errors && !matchControl.errors['fechaFinPosterior']) {
+      return;
+    }
+
+    if (new Date(control.value) > new Date(matchControl.value)) {
+      matchControl.setErrors({ fechaFinPosterior: true });
+    } else {
+      matchControl.setErrors(null);
+    }
+  };
 }

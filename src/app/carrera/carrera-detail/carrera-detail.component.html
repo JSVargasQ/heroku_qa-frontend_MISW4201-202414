@@ -101,7 +101,7 @@
         <tbody>
           <tr *ngFor="let apuesta of evento?.apuestas">
             <td>
-              {{ apuesta.apostador.nombres }} {{ apuesta.apostador.apellidos }}
+              {{ apuesta.apostador === null ? ":usuario_eliminado:" : apuesta.apostador.nombres }} {{ apuesta.apostador?.apellidos }}
             </td>
             <td class="text-center">
               {{ getCompetidor(apuesta.id_posible_resultado) }}

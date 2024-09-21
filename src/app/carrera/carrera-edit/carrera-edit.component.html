@@ -5,7 +5,7 @@
       <div class="card mx-3 my-5">
         <div class="row">
           <div class="col-12 text-center">
-            <p class="mt-5 mb-2 fs-3 fw-bold">Editar carrera</p>
+            <p class="mt-5 mb-2 fs-3 fw-bold">Editar evento</p>
           </div>
         </div>
         <form class="mx-5 my-3" [formGroup]="carreraForm" (ngSubmit)="editarCarrera(carreraForm.value)">
@@ -39,7 +39,7 @@
             <div class="card-header">
               <div class="row">
                 <div class="col-12 text-center">
-                  <label class="fs-6">Competidores</label>
+                  <label class="fs-6">Posibles resultados</label>
                 </div>
               </div>
             </div>
@@ -50,8 +50,8 @@
                   <input formControlName="id" type="hidden" />
                   <div class="row">
                     <div class="col-6">
-                      <input type="text" class="form-control" formControlName="competidor"
-                        placeholder="Nombre del competidor">
+                      <input type="text" class="form-control" formControlName="posible_resultado"
+                        placeholder="Posible resultado">
                     </div>
                     <div class="col-5">
                       <input type="number" class="form-control" formControlName="probabilidad"
@@ -66,16 +66,16 @@
                     <div class="row justify-content-center">
                       <div class="col-12">
                         <div class="alert alert-danger my-3"
-                          *ngIf="competidoresForm.get('competidor')?.hasError('required') && competidoresForm.get('competidor')?.touched">
-                          Debe ingresar un nombre para el competidor
+                          *ngIf="competidoresForm.get('posible_resultado')?.hasError('required') && competidoresForm.get('posible_resultado')?.touched">
+                          Debe ingresar un posible resultado
                         </div>
                         <div class="alert alert-danger my-3"
                           *ngIf="competidoresForm.get('competidor')?.hasError('minlength')">
-                          El nombre debe tener por lo menos un carácter
+                          El posible resultado debe tener por lo menos un carácter
                         </div>
                         <div class="alert alert-danger my-3"
                           *ngIf="competidoresForm.get('competidor')?.hasError('maxlength')">
-                          El nombre no debe exceder los 128 carácteres
+                          El posible resultado no debe exceder los 128 carácteres
                         </div>
                         <div class="alert alert-danger my-3"
                           *ngIf="competidoresForm.get('probabilidad')?.hasError('max')">

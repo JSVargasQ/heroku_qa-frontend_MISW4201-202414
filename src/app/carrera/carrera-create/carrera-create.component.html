@@ -22,14 +22,11 @@
             <div class="row justify-content-center">
               <div class="col-12">
                 <div class="alert alert-danger my-3"
-                  *ngIf="eventoForm.get('nombre')?.hasError('required') && eventoForm.get('nombre')?.touched">
+                     *ngIf="eventoForm.get('nombre')?.hasError('required') && eventoForm.get('nombre')?.touched">
                   Debe ingresar un nombre para el evento
                 </div>
-                <div class="alert alert-danger my-3" *ngIf="eventoForm.get('nombre')?.hasError('minlength')">
-                  El nombre debe tener por lo menos un carácter
-                </div>
                 <div class="alert alert-danger my-3" *ngIf="eventoForm.get('nombre')?.hasError('maxlength')">
-                  El nombre no debe exceder los 128 carácteres
+                  El nombre no debe exceder los 100 carácteres
                 </div>
               </div>
             </div>
@@ -50,8 +47,8 @@
             <div class="row justify-content-center">
               <div class="col-12">
                 <div class="alert alert-danger my-3"
-                  *ngIf="eventoForm.get('tipo')?.hasError('required') && eventoForm.get('tipo')?.touched">
-                  Debe seleccionar un tipo para el evento
+                     *ngIf="eventoForm.get('tipo')?.hasError('required') && eventoForm.get('tipo')?.touched">
+                  Debe seleccionar un tipo de evento
                 </div>
               </div>
             </div>
@@ -68,14 +65,8 @@
             <div class="row justify-content-center">
               <div class="col-12">
                 <div class="alert alert-danger my-3"
-                  *ngIf="eventoForm.get('fecha_inicio')?.hasError('required') && eventoForm.get('fecha_inicio')?.touched">
-                  Debe seleccionar una fecha de inicio para el evento
-                </div>
-                <div class="alert alert-danger my-3" *ngIf="eventoForm.get('fecha_inicio')?.hasError('minlength')">
-                  La fecha de inicio debe tener por lo menos un carácter
-                </div>
-                <div class="alert alert-danger my-3" *ngIf="eventoForm.get('fecha_inicio')?.hasError('maxlength')">
-                  La fecha de inicio no debe exceder los 128 carácteres
+                     *ngIf="eventoForm.get('fecha_inicio')?.hasError('required') && eventoForm.get('fecha_inicio')?.touched">
+                  Debe ingresar la fecha de inicio para el evento
                 </div>
               </div>
             </div>
@@ -92,14 +83,12 @@
             <div class="row justify-content-center">
               <div class="col-12">
                 <div class="alert alert-danger my-3"
-                  *ngIf="eventoForm.get('fecha_fin')?.hasError('required') && eventoForm.get('fecha_fin')?.touched">
-                  Debe seleccionar una fecha de finalización para el evento
+                     *ngIf="eventoForm.get('fecha_fin')?.hasError('required') && eventoForm.get('fecha_fin')?.touched">
+                  Debe ingresar la fecha de finalización para el evento
                 </div>
-                <div class="alert alert-danger my-3" *ngIf="eventoForm.get('fecha_fin')?.hasError('minlength')">
-                  La fecha de finalización debe tener por lo menos un carácter
-                </div>
-                <div class="alert alert-danger my-3" *ngIf="eventoForm.get('fecha_fin')?.hasError('maxlength')">
-                  La fecha de finalización no debe exceder los 128 carácteres
+                <div class="alert alert-danger my-3"
+                     *ngIf="eventoForm.get('fecha_fin')?.hasError('fechaFinPosterior')">
+                  La fecha de finalización debe ser posterior a la fecha de inicio
                 </div>
               </div>
             </div>
@@ -117,14 +106,11 @@
             <div class="row justify-content-center">
               <div class="col-12">
                 <div class="alert alert-danger my-3"
-                  *ngIf="eventoForm.get('descripcion')?.hasError('required') && eventoForm.get('descripcion')?.touched">
-                  Debe ingresar una descripción para la carrera
-                </div>
-                <div class="alert alert-danger my-3" *ngIf="eventoForm.get('descripcion')?.hasError('minlength')">
-                  La descripción debe tener por lo menos un carácter
+                     *ngIf="eventoForm.get('descripcion')?.hasError('required') && eventoForm.get('descripcion')?.touched">
+                  Debe ingresar una descripción para el evento
                 </div>
                 <div class="alert alert-danger my-3" *ngIf="eventoForm.get('descripcion')?.hasError('maxlength')">
-                  La descripción no debe exceder los 128 carácteres
+                  La descripción no debe exceder los 500 carácteres
                 </div>
               </div>
             </div>
@@ -139,17 +125,14 @@
                 <label for="equipo_1">Equipo 1</label>
               </div>
               <div class="col-10">
-                <input type="text" class="form-control" formControlName="equipo_1" placeholder="Nombre del evento">
+                <input type="text" class="form-control" formControlName="equipo_1" placeholder="Equipo 1">
               </div>
             </div>
             <div class="row justify-content-center">
               <div class="col-12">
                 <div class="alert alert-danger my-3"
-                  *ngIf="eventoForm.get('equipo_1')?.hasError('required') && eventoForm.get('equipo_1')?.touched">
-                  Debe ingresar un nombre para el equipo
-                </div>
-                <div class="alert alert-danger my-3" *ngIf="eventoForm.get('equipo_1')?.hasError('minlength')">
-                  El nombre debe tener por lo menos un carácter
+                     *ngIf="eventoForm.get('equipo_1')?.hasError('required') && eventoForm.get('equipo_1')?.touched">
+                  Debe ingresar el nombre del equipo 1
                 </div>
                 <div class="alert alert-danger my-3" *ngIf="eventoForm.get('equipo_1')?.hasError('maxlength')">
                   El nombre no debe exceder los 128 carácteres
@@ -163,17 +146,14 @@
                 <label for="equipo_2">Equipo 2</label>
               </div>
               <div class="col-10">
-                <input type="text" class="form-control" formControlName="equipo_2" placeholder="Nombre del evento">
+                <input type="text" class="form-control" formControlName="equipo_2" placeholder="Equipo 2">
               </div>
             </div>
             <div class="row justify-content-center">
               <div class="col-12">
                 <div class="alert alert-danger my-3"
-                  *ngIf="eventoForm.get('equipo_2')?.hasError('required') && eventoForm.get('equipo_2')?.touched">
-                  Debe ingresar un nombre para el equipo
-                </div>
-                <div class="alert alert-danger my-3" *ngIf="eventoForm.get('equipo_2')?.hasError('minlength')">
-                  El nombre debe tener por lo menos un carácter
+                     *ngIf="eventoForm.get('equipo_2')?.hasError('required') && eventoForm.get('equipo_2')?.touched">
+                  Debe ingresar el nombre del equipo 2
                 </div>
                 <div class="alert alert-danger my-3" *ngIf="eventoForm.get('equipo_2')?.hasError('maxlength')">
                   El nombre no debe exceder los 128 carácteres
