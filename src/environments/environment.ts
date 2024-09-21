@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backURL: 'http://127.0.0.1:5000',
+  backURL: 'https://eporra-qa-backend-57120b371ad2.herokuapp.com/',
 };
 
 /*
